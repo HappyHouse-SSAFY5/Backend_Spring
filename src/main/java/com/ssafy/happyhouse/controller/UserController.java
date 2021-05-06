@@ -11,8 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import com.ssafy.guestbook.model.MemberDto;
-import com.ssafy.guestbook.model.service.UserService;
+import com.ssafy.happyhouse.model.MemberDto;
+import com.ssafy.happyhouse.model.service.UserService;
 
 @Controller
 @RequestMapping("/user")

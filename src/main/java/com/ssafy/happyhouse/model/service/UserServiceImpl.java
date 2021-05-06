@@ -9,8 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ssafy.guestbook.model.MemberDto;
-import com.ssafy.guestbook.model.mapper.UserMapper;
+import com.ssafy.happyhouse.model.MemberDto;
+import com.ssafy.happyhouse.model.mapper.UserMapper;
 
 @Service
 public class UserServiceImpl implements UserService {

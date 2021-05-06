@@ -4,7 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
-import com.ssafy.guestbook.model.MemberDto;
+import com.ssafy.happyhouse.model.MemberDto;
 
 public interface UserMapper {
 
