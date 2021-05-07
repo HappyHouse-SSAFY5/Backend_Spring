@@ -81,7 +81,7 @@
     <!-- 상단 Header Start  -->
     <nav class="navbar navbar-expand-sm bg-light fixed-top shadow">
       <div class="container">
-        <a class="navbar-brand" href="./main.jsp">Happy House</a>
+        <a class="navbar-brand" href="${root}/">Happy House</a>
         <button
           class="navbar-toggler navbar-toggler-right bg-secondary text-white"
           type="button"
