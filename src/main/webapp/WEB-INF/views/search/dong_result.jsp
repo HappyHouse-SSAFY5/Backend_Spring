@@ -42,8 +42,8 @@
 	<body>	
 	<div class="container" align="center">
 		<div class="col-lg-8" align="right">
-		<strong>${userinfo.userName}</strong>님 환영합니다.
-		<a href="${root}/main?act=logout">로그아웃</a>
+		<strong>${userinfo.username}</strong>님 환영합니다.
+		<a href="${root}/user/logout">로그아웃</a>
 		</div>
 	  <div class="col-lg-8" align="center">
 	  <h2>아파트 정보 검색</h2>
