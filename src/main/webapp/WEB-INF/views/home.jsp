@@ -95,6 +95,9 @@
             <li class="nav-item">
               <a class="nav-link text-secondary" href="${root}/main?act=list&key=&word=">공지사항</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link text-secondary" href="${root}/user/sitemap">사이트맵 Sitemap</a>
+            </li>
           </ul>
          <div >
 
