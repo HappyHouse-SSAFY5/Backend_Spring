@@ -93,7 +93,7 @@
         <div id="navb" class="collapse navbar-collapse">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-              <a class="nav-link text-secondary" href="${root}/main?act=list&key=&word=">공지사항</a>
+              <a class="nav-link text-secondary" href="${root}/article/list?pg=1&key=&word=">공지사항</a>
             </li>
             <li class="nav-item">
               <a class="nav-link text-secondary" href="${root}/user/sitemap">사이트맵 Sitemap</a>
