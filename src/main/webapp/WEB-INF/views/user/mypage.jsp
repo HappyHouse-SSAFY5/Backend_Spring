@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<title>SSAFY-회원가입</title>
+<title>SSAFY - MyPage</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
@@ -29,13 +29,18 @@ $(document).ready(function() {
 			alert("비밀번호 확인!!!");
 			return;
 		} else {
-			$("#memberform").attr("action", "${root}/user/join").submit();
+			$("#memberform").attr("action", "${root}/user/update").submit();
 		}
 	});
 	 
 	$('#zipcode').focusin(function() {
 		$('#zipModal').modal();
 	});
+	
+	$("#deleteBtn").click(function(){
+		$("#deleteform").attr("action", "${root}/user/delete").submit();
+	})
+	
 });
 </script>
 </head>
@@ -43,16 +48,16 @@ $(document).ready(function() {
 
 <div class="container" align="center">
 	<div class="col-lg-6" align="center">
-	<h2>회원가입</h2>
+		<h2>My Page</h2>
 		<form id="memberform" method="post" action="">
-		<input type="hidden" name="act" id="act" value="signup">
+		<input type="hidden" name="act" id="act" value="modifyuserinfo">
 			<div class="form-group" align="left">
 				<label for="name">이름</label>
-				<input type="text" class="form-control" id="username" name="username" placeholder="">
+				<input type="text" class="form-control" id="username" name="username" value="${userinfo.username}">
 			</div>
 			<div class="form-group" align="left">
 				<label for="">아이디</label>
-				<input type="text" class="form-control" id="userid" name="userid" placeholder="">
+				<input type="text" class="form-control" id="userid" name="userid" value="${userinfo.userid}" readonly>
 			</div>
 			<div class="form-group" align="left">
 				<label for="">비밀번호</label>
@@ -65,37 +70,21 @@ $(document).ready(function() {
 			<div class="form-group" align="left">
 				<label for="email">이메일</label><br>
 				<div id="email" class="custom-control-inline">
-				<input type="text" class="form-control" id="email" name="email" placeholder="" size="25">
-				</div>
-			</div>
-			<div class="form-group" align="left">
-				<label for="tel">전화번호</label>
-				<div id="tel" class="custom-control-inline">
-				<select class="form-control" id="tel1" name="tel1">
-					<option value="010">010</option>
-					<option value="02">02</option>
-					<option value="031">031</option>
-					<option value="032">032</option>
-					<option value="041">041</option>
-					<option value="051">051</option>
-					<option value="061">061</option>
-				</select> _
-				<input type="text" class="form-control" id="tel2" name="tel2" placeholder=""> _
-				<input type="text" class="form-control" id="tel3" name="tel3" placeholder="">
+				<input type="text" class="form-control" id="email" name="email" value="${userinfo.email}" placeholder="" size="25">
 				</div>
 			</div>
 			<div class="form-group" align="left">
 				<label for="">주소</label><br>
-				<div id="addressdiv" class="custom-control-inline">
-					<input type="text" class="form-control" id="zipcode" name="zipcode" placeholder="우편번호" size="7" maxlength="5" readonly="readonly">
-					<!--<button type="button" class="btn btn-primary" onclick="javascript:">우편번호</button>-->
-				</div>
-				<input type="text" class="form-control" id="address" name="address" placeholder="">
+				<input type="text" class="form-control" id="address" name="address" value="${userinfo.address}">
 			</div>
 			<div class="form-group" align="center">
-				<button type="button" class="btn btn-primary" id="registerBtn">회원가입</button>
-				<button type="reset" class="btn btn-warning">초기화</button>
+				<button type="button" class="btn btn-warning" id="registerBtn">수정/확인</button>
 			</div>
+		</form>
+		<form id="deleteform" method="post" action ="">
+			<input type="hidden" name="act" id="act" value="deleteuserinfo">
+			<input type="hidden" name="userid" value="${userinfo.userid}">
+				<button type="submit" class="btn btn-danger" id="deleteBtn">회원탈퇴</button>
 		</form>
 	</div>
 </div>

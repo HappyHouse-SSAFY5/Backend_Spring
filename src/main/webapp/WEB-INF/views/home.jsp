@@ -103,18 +103,18 @@
 		  <ul class="navbar-nav text-black" >
 		  <c:if test="${userinfo eq null}">
 		    <li class="nav-item mr-2">
-		      <a href="${root}/main?act=mvsignup"> Sign up </a>
+		      <a href="${root}/user/join"> Sign up </a>
 		    </li>
 		    <li class="nav-item mr-2">
-		      <a href="${root}/main?act=mvlogin"> Login </a>
+		      <a href="${root}/user/login"> Login </a>
 		    </li>
 		    </c:if>
 		    <c:if test="${userinfo ne null}">
 		    <li class="nav-item mr-2">
-		    <a href="${root}/main?act=logout"> Logout </a>
+		    <a href="${root}/user/logout"> Logout </a>
 		    </li>
 		    <li class="nav-item mr-2">
-		      <a href="${root}/main?act=mypage"> MyPage </a>
+		      <a href="${root}/user/mypage"> MyPage </a>
 		    </li>
 		    </c:if>
 		  </ul>

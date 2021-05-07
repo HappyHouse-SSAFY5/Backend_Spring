@@ -33,6 +33,7 @@ public class UserController {
 		try {
 			MemberDto memberDto = userService.login(map);
 			if(memberDto != null) {
+				System.out.println(memberDto);
 				session.setAttribute("userinfo", memberDto);
 				
 				Cookie cookie = new Cookie("ssafy_id", memberDto.getUserid());
@@ -52,7 +53,24 @@ public class UserController {
 			model.addAttribute("msg", "로그인 중 문제가 발생했습니다.");
 			return "error/error";
 		}
-		return "index";
+		return "home";
+	}
+	
+	@RequestMapping(value = "/join", method = RequestMethod.GET)
+	public String join() {
+		return "user/join";	
+	}
+	
+	@RequestMapping(value = "/join", method = RequestMethod.POST)
+	public String join(MemberDto memberDto, Model model) {
+		try {
+			userService.userRegister(memberDto);
+			return "home";
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("msg", "회원가입 중 문제가 발생했습니다.");
+			return "error/error";
+		}
 	}
 	
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
@@ -64,5 +82,41 @@ public class UserController {
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String list() {
 		return "user/list";
+	}
+	
+	@RequestMapping(value = "/mypage", method = RequestMethod.GET)
+	public String mypage(Model model, HttpSession session) { // 마이페이지
+		try {
+			MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
+			System.out.println(memberDto);
+			model.addAttribute("userinfo", memberDto);
+			return "user/mypage";
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("msg", "마이페이지 로딩 중 문제가 발생했습니다.");
+			return "error/error";
+		}
+	}
+	
+	@RequestMapping(value = "/update", method = RequestMethod.POST)
+	public String update(MemberDto memberDto, Model model) {
+		try {
+			System.out.println(memberDto);
+			userService.userModify(memberDto);
+			return "home";
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("msg", "회원 정보 수정 중 문제가 발생했습니다.");
+			return "error/error";
+		}
+	}
+	
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	public String delete(HttpSession session) { // 회원탈퇴
+		MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
+		String id = memberDto.getUserid();
+		userService.userDelete(id);
+		session.invalidate();
+		return "home";
 	}
 }

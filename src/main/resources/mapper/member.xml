@@ -4,7 +4,7 @@
 
 <mapper namespace="com.ssafy.happyhouse.model.mapper.UserMapper">
 	<select id="login" parameterType="map" resultType="memberDto">
-		select username, userid, email
+		select username, userid, email, address
 		from ssafy_member
 		where userid = #{userid} and userpwd = #{userpwd}
 	</select>
