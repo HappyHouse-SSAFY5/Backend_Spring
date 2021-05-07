@@ -269,7 +269,7 @@
 				</script>
 				<!-- Google Map end -->
 			  <div class="btn-group" style="width: 100%; margin-top: 20px;">
-			    <button type="button" class="btn btn-primary"><a href="${root}/main?act=mvsearch" style="color: white;text-decoration: none;">주거공간 검색</a></button>
+			    <button type="button" class="btn btn-primary"><a href="${root}/search/dong" style="color: white;text-decoration: none;">주거공간 검색</a></button>
 			    </div>
 			  </div>
             </div>
