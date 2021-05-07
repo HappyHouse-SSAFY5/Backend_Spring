@@ -2,7 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.ssafy.guestbook.model.mapper.AptMapper">
-
+<mapper namespace="com.ssafy.happyhouse.model.mapper.AptMapper">
+	<select id="listDong" parameterType="map" resultType="aptInfoDto">
+		SELECT houseinfo.dong, houseinfo.AptName, housedeal.dealAmount, housedeal.dealDay, housedeal.dealMonth, housedeal.dealYear, housedeal.area, houseinfo.lat, houseinfo.lng
+		FROM houseinfo, housedeal
+		WHERE houseinfo.no = housedeal.houseinfoid
+		<if test="word != null and word != ''">
+			<if test="key == 'name'">
+				and houseinfo.AptName like concat('%', #{word}, '%')
+			</if>
+			<if test="key == 'dong'">
+				and houseinfo.dong = #{word}
+			</if>
+		</if>
+	</select>
 	
 </mapper>
