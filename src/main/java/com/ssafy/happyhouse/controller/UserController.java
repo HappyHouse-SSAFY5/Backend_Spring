@@ -125,4 +125,9 @@ public class UserController {
 		return "user/findpw";	
 	}
 	
+	@RequestMapping(value = "/sitemap", method = RequestMethod.GET)
+	public String sitemap() {
+		return "sitemap";	
+	}
+	
 }
