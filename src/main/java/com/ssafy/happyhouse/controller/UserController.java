@@ -119,4 +119,10 @@ public class UserController {
 		session.invalidate();
 		return "home";
 	}
+	
+	@RequestMapping(value = "/findpassword", method = RequestMethod.GET)
+	public String findpw() {
+		return "user/findpw";	
+	}
+	
 }
