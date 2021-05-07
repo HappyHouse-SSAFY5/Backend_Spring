@@ -119,6 +119,9 @@
 		    <li class="nav-item mr-2">
 		      <a href="${root}/user/mypage"> MyPage </a>
 		    </li>
+		    <li class="nav-item mr-2">
+		      <a href="${root}/user/list"> 회원정보 검색 </a>
+		    </li>
 		    </c:if>
 		  </ul>
 		</nav>
