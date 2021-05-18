@@ -98,6 +98,9 @@
             <li class="nav-item">
               <a class="nav-link text-secondary" href="${root}/user/sitemap">사이트맵 Sitemap</a>
             </li>
+             <li class="nav-item">
+              <a class="nav-link text-secondary" href="http://localhost:8083/qna">QNA</a>
+            </li>
           </ul>
          <div >
 
