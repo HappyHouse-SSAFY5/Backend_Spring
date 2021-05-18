@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.happyhouse.model.MemberDto;
 import com.ssafy.happyhouse.model.QnaDto;
 import com.ssafy.happyhouse.model.service.QnaService;
 import com.ssafy.util.PageNavigation;
@@ -34,12 +37,20 @@ public class QnaController {
 	private QnaService qnaService;
 	
 	@PostMapping(value = "/registration")
-	public ResponseEntity<List<QnaDto>> userRegister(@RequestBody QnaDto qnaDto) throws Exception {
+	public ResponseEntity<List<QnaDto>> qnaRegister(@RequestBody QnaDto qnaDto) throws Exception {
+//		, HttpSession session
+//		MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
+//		System.out.println(memberDto);
+//		System.out.println("sdfsf hi");
+		
+		qnaDto.setUserid("admin");
+		System.out.println(qnaDto);
 		int cnt = qnaService.writeQna(qnaDto);
 		Map<String, String> map = new HashMap<>();
 		map.put("key", "");
 		map.put("word", "");
-		map.put("spp", "10");//sizePerPage
+		map.put("spp", "30");//sizePerPage
+		// userinfo 추가하기
 		if(cnt != 0) {
 			List<QnaDto> list = qnaService.listQna(map);
 			return new ResponseEntity<List<QnaDto>>(list, HttpStatus.OK);
@@ -52,7 +63,7 @@ public class QnaController {
 		String spp = map.get("spp");
 		System.out.println(map.get("key"));
 		System.out.println(map.get("word"));
-		map.put("spp", spp != null ? spp : "10");//sizePerPage
+		map.put("spp", spp != null ? spp : "30");//sizePerPage
 
 		List<QnaDto> list = qnaService.listQna(map);
 		PageNavigation pageNavigation = qnaService.makePageNavigation(map);
@@ -81,7 +92,7 @@ public class QnaController {
 		Map<String, String> map = new HashMap<>();
 		map.put("key", "");
 		map.put("word", "");
-		map.put("spp", "10");//sizePerPage
+		map.put("spp", "30");//sizePerPage
 		List<QnaDto> list = qnaService.listQna(map);
 		return new ResponseEntity<List<QnaDto>>(list, HttpStatus.OK);
 	}
@@ -93,7 +104,7 @@ public class QnaController {
 		Map<String, String> map = new HashMap<>();
 		map.put("key", "");
 		map.put("word", "");
-		map.put("spp", "10");//sizePerPage
+		map.put("spp", "30");//sizePerPage
 		List<QnaDto> list = qnaService.listQna(map);
 		return new ResponseEntity<List<QnaDto>>(list, HttpStatus.OK);
 	}

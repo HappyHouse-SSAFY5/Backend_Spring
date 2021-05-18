@@ -1,10 +1,13 @@
 package com.ssafy.happyhouse.model;
 
-public class QnaDto {
+import java.io.Serializable;
+
+public class QnaDto implements Serializable{
 	private int id;
 	private String title;
 	private String content;
 	private String userid;
+	public QnaDto() {}
 	public QnaDto(int id, String title, String content, String userid) {
 		super();
 		this.id = id;
