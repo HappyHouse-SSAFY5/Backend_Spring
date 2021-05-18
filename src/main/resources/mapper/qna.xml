@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.happyhouse.model.mapper.QnaMapper">
+
+	<insert id="writeQna" parameterType="QnaDto">
+		insert into qna (title, content, userid)
+		values (#{title}, #{content}, #{userid})
+		<selectKey resultType="int" keyProperty="id" order="AFTER">
+        	SELECT LAST_INSERT_ID()
+    	</selectKey>
+	</insert>
+	
+	<resultMap type="QnaDto" id="qnaList">
+		<result property="id" column="id"/>
+		<result property="title" column="title"/>
+		<result property="content" column="content"/>
+		<result property="userid" column="userid"/>
+	</resultMap>
+	
+	<select id="listQna" parameterType="map" resultMap="qnaList">
+		<![CDATA[
+		select id, title, content, userid
+		from qna
+		]]>
+		<if test="word != null and word != ''">
+			<if test="key == 'subject'">
+				where subject like concat('%', #{word}, '%')
+			</if>
+			<if test="key != 'subject'">
+				where ${key} = #{word}
+			</if>
+		</if>
+		limit #{start}, #{spp}
+	</select>
+	
+	<select id="getTotalCount" parameterType="map" resultType="int">
+		select count(id)
+		from qna
+		<if test="word != null and word != ''">
+			<if test="key == 'title'">
+				where title like concat('%', #{word}, '%')
+			</if>
+			<if test="key != 'subject'">
+				where ${key} = #{word}
+			</if>
+		</if>
+	</select>
+	
+	<select id="getQna" parameterType="int" resultType="QnaDto">
+		select id, title, content, userid
+		from qna
+		where id = #{id}
+	</select>
+	
+	<update id="modifyQna" parameterType="QnaDto">
+		update qna
+		set title = #{title}, content = #{content}
+		where id = #{id}
+	</update>
+	
+	<delete id="deleteQna" parameterType="int">
+	delete from qna
+	where id = #{id}
+	</delete>
+	
+</mapper>
