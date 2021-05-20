@@ -1,5 +1,8 @@
 package com.ssafy.happyhouse.controller;
 
+import java.io.Console;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.*;
@@ -7,6 +10,8 @@ import javax.servlet.http.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +21,7 @@ import com.ssafy.happyhouse.model.service.UserService;
 
 @Controller
 @RequestMapping("/user")
+@CrossOrigin("*")
 public class UserController {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
@@ -27,33 +33,27 @@ public class UserController {
 	public String login() {
 		return "user/login";
 	}
-	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String login(@RequestParam Map<String, String> map, Model model, HttpSession session, HttpServletResponse response) {
-		try {
-			MemberDto memberDto = userService.login(map);
-			if(memberDto != null) {
-				System.out.println(memberDto);
-				session.setAttribute("userinfo", memberDto);
-				
-				Cookie cookie = new Cookie("ssafy_id", memberDto.getUserid());
-				cookie.setPath("/");
-				if("saveok".equals(map.get("idsave"))) {
-					cookie.setMaxAge(60 * 60 * 24 * 365 * 40);//40년간 저장.
-				} else {
-					cookie.setMaxAge(0);
-				}
-				response.addCookie(cookie);
-				
+	public ResponseEntity<MemberDto> login(@RequestBody MemberDto member , HttpSession session, HttpServletResponse response) throws Exception {
+		Map<String, String> map = new HashMap<String, String>(); 
+		map.put("userid", member.getUserid());
+		map.put("userpwd", member.getUserpwd());
+		MemberDto memberDto = userService.login(map);
+		if(memberDto != null) {
+			session.setAttribute("userinfo", memberDto);
+			
+			Cookie cookie = new Cookie("ssafy_id", memberDto.getUserid());
+			cookie.setPath("/");
+			if("saveok".equals(map.get("idsave"))) {
+				cookie.setMaxAge(60 * 60 * 24 * 365 * 40);//40년간 저장.
 			} else {
-				model.addAttribute("msg", "아이디 또는 비밀번호 확인 후 로그인해 주세요.");
+				cookie.setMaxAge(0);
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			model.addAttribute("msg", "로그인 중 문제가 발생했습니다.");
-			return "error/error";
+			response.addCookie(cookie);
+			return new ResponseEntity<MemberDto>(memberDto, HttpStatus.OK);
+		} else {
+			return new ResponseEntity(HttpStatus.NO_CONTENT);
 		}
-		return "home";
 	}
 	
 	@RequestMapping(value = "/join", method = RequestMethod.GET)
