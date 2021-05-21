@@ -61,15 +61,15 @@ public class UserController {
 		return "user/join";	
 	}
 	
-	@RequestMapping(value = "/join", method = RequestMethod.POST)
-	public String join(MemberDto memberDto, Model model) {
-		try {
-			userService.userRegister(memberDto);
-			return "home";
-		} catch (Exception e) {
-			e.printStackTrace();
-			model.addAttribute("msg", "회원가입 중 문제가 발생했습니다.");
-			return "error/error";
+	@PostMapping(value="/join")
+	public ResponseEntity<MemberDto> join(@RequestBody MemberDto memberDto) throws Exception{
+		int num = userService.userRegister(memberDto);
+		System.out.println("여기여기여기");
+		System.out.println(num);
+		if(num >= 1) {
+			return new ResponseEntity<MemberDto>(memberDto, HttpStatus.OK);
+		} else {
+			return new ResponseEntity(HttpStatus.NOT_FOUND);
 		}
 	}
 	
@@ -79,9 +79,14 @@ public class UserController {
 		return "redirect:/";
 	}
 	
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public String list() {
-		return "user/list";
+	@GetMapping(value = "/list")
+	public ResponseEntity<List<MemberDto>> userList() {
+		List<MemberDto> list = userService.userList();
+		if(list != null && !list.isEmpty()) {
+			return new ResponseEntity<List<MemberDto>>(list, HttpStatus.OK);
+		} else {
+			return new ResponseEntity(HttpStatus.NO_CONTENT);
+		}
 	}
 	
 	@RequestMapping(value = "/mypage", method = RequestMethod.GET)
