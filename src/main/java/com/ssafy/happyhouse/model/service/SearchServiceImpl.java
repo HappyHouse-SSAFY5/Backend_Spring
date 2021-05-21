@@ -26,8 +26,6 @@ public class SearchServiceImpl implements SearchService{
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("key", map.get("key") == null ? "" : map.get("key"));
 		param.put("word", map.get("word") == null ? "" : map.get("word"));
-		
 		return sqlSession.getMapper(AptMapper.class).listDong(param);
 	}
-
 }
