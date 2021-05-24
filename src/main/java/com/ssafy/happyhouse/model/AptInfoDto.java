@@ -5,7 +5,7 @@ public class AptInfoDto {
 	private int rnum;
 	private String AptName;
 	private String dealAmount;
-//	private String dealDate;
+	private String code;
 	private String dealDay;
 	private String dealMonth;
 	private String dealYear;
@@ -17,7 +17,7 @@ public class AptInfoDto {
 	private String lat;
 	private String lng;
 	public AptInfoDto(){}
-	public AptInfoDto(int rnum, String aptName, String dealAmount, String area, String sido, String gugun, String dong,
+	public AptInfoDto(int rnum, String aptName, String dealAmount,String code, String area, String sido, String gugun, String dong,
 			String lat, String lng, String floor) {
 		super();
 		this.rnum = rnum;
@@ -28,6 +28,7 @@ public class AptInfoDto {
 		this.lat = lat;
 		this.lng = lng;
 		this.floor = floor;
+		this.code = code;
 	}
 
 	public int getRnum() {
@@ -116,11 +117,18 @@ public class AptInfoDto {
 	public void setFloor(String floor) {
 		this.floor = floor;
 	}
+	public String getCode() {
+		return code;
+	}
+	public void setCode(String code) {
+		this.code = code;
+	}
 	@Override
 	public String toString() {
-		return "AptInfoDto [aptName=" + AptName + ", dealAmount=" + dealAmount + ", dealday=" + dealDay + ", dealMonth="
-				+ dealMonth + ", dealYear=" + dealYear + ", area=" + area + ", dong=" + dong + ", lat=" + lat + ", lng="
-				+ lng + ", floor=" + floor + "]";
+		return "AptInfoDto [rnum=" + rnum + ", AptName=" + AptName + ", dealAmount=" + dealAmount + ", code=" + code
+				+ ", dealDay=" + dealDay + ", dealMonth=" + dealMonth + ", dealYear=" + dealYear + ", floor=" + floor
+				+ ", area=" + area + ", dong=" + dong + ", lat=" + lat + ", lng=" + lng + "]";
 	}
+	
 
 }
