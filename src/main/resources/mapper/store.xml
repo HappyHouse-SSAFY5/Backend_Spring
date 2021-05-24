@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.happyhouse.model.mapper.StoreMapper">
+	<select id="nearStore" parameterType="String" resultType="storeDto">
+		SELECT store_num, store_name, branch_name, code, part_name, mid_part_name, sm_part_name, dong_code, dong_name, building_name, address, lat, lng
+		FROM store_seoul
+		WHERE dong_name = #{dong}
+	</select>
+	
+</mapper>
