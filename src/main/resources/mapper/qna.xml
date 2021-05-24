@@ -21,7 +21,7 @@
 	
 	<select id="listQna" parameterType="map" resultMap="qnaList">
 		<![CDATA[
-		select id, title, content, userid
+		select id, title, replace(content, '\n', '<br>') content, userid
 		from qna
 		]]>
 		<if test="word != null and word != ''">
@@ -32,6 +32,7 @@
 				where ${key} = #{word}
 			</if>
 		</if>
+		order by id desc
 		limit #{start}, #{spp}
 	</select>
 	

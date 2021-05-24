@@ -16,6 +16,8 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -24,11 +26,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ssafy.happyhouse.model.GuestBookDto;
 import com.ssafy.happyhouse.model.MemberDto;
+import com.ssafy.happyhouse.model.QnaDto;
 import com.ssafy.happyhouse.model.service.GuestBookService;
 import com.ssafy.util.PageNavigation;
 
 @Controller
 @RequestMapping("/article")
+@CrossOrigin("*")
 public class GuestBookController {
 
 	private static final Logger logger = LoggerFactory.getLogger(GuestBookController.class);
@@ -39,91 +43,67 @@ public class GuestBookController {
 	@Autowired
 	private GuestBookService guestBookService;
 	
-	@RequestMapping(value = "/write", method = RequestMethod.GET)
-	public String write() {
-		return "guestbook/write";
-	}
-	
-	@RequestMapping(value = "/write", method = RequestMethod.POST)
-	public String write(GuestBookDto guestBookDto, @RequestParam("upfile") MultipartFile[] files, Model model, HttpSession session) throws IllegalStateException, IOException {
-		MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
-		if(memberDto != null) {	
-			guestBookDto.setUserid(memberDto.getUserid());
-			try {
-				guestBookService.writeArticle(guestBookDto);
-				return "guestbook/writesuccess";
-			} catch (Exception e) {
-				e.printStackTrace();
-				model.addAttribute("msg", "글작성중 문제가 발생했습니다.");
-				return "error/error";
-			}
+	@PostMapping(value="/write")
+	public ResponseEntity<List<GuestBookDto>> write(@RequestBody GuestBookDto guestBookDto) throws Exception {
+		int num = guestBookService.writeArticle(guestBookDto);
+		Map<String, String> map = new HashMap<>();
+		map.put("key", "");
+		map.put("word", "");
+		map.put("spp", "10");//sizePerPage
+		
+		if(num >= 1) {
+			List<GuestBookDto> list = guestBookService.listArticle(map);
+			return new ResponseEntity<List<GuestBookDto>>(list, HttpStatus.OK);
 		} else {
-			model.addAttribute("msg", "로그인 후 사용 가능한 페이지입니다.");
-			return "error/error";
+			return new ResponseEntity(HttpStatus.NOT_FOUND);
 		}
 	}
 	
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public String list(@RequestParam Map<String, String> map, Model model) throws Exception {
+	@GetMapping(value = "/detail/{articleno}")
+	public ResponseEntity<GuestBookDto> getNotice(@PathVariable("articleno") int articleno) throws Exception {
+		GuestBookDto guestBookDto = guestBookService.getArticle(articleno);
+		if(guestBookDto != null)
+			return new ResponseEntity<GuestBookDto>(guestBookDto, HttpStatus.OK);
+		else
+			return new ResponseEntity(HttpStatus.NO_CONTENT);
+	}
+	
+	@GetMapping(value = "/list")
+	public ResponseEntity<List<GuestBookDto>> list(@RequestParam Map<String, String> map) throws Exception {
 		String spp = map.get("spp");
 		System.out.println(map.get("key"));
 		System.out.println(map.get("word"));
 		map.put("spp", spp != null ? spp : "10");//sizePerPage
-//		try {
-			List<GuestBookDto> list = guestBookService.listArticle(map);
-			PageNavigation pageNavigation = guestBookService.makePageNavigation(map);
-			model.addAttribute("articles", list);
-			model.addAttribute("navigation", pageNavigation);
-			return "guestbook/list";
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			model.addAttribute("msg", "글목록을 얻어오는 중 문제가 발생했습니다.");
-//			return "error/error";
-//		}
-	}
-	
-	@RequestMapping(value = "/modify", method = RequestMethod.GET)
-	public String modify(@RequestParam("articleno") int articleno, Model model) {
-		try {
-			GuestBookDto guestBookDto = guestBookService.getArticle(articleno);
-			model.addAttribute("article", guestBookDto);
-			return "guestbook/modify";
-		} catch (Exception e) {
-			e.printStackTrace();
-			model.addAttribute("msg", "글수정 처리 중 문제가 발생했습니다.");
-			return "error/error";
-		}
-	}
-	
-	@RequestMapping(value = "/modify", method = RequestMethod.POST)
-	public String modify(GuestBookDto guestBookDto, Model model, HttpSession session) {
-		MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
-		if(memberDto != null) {
-			guestBookDto.setUserid(memberDto.getUserid());
-			try {
-				guestBookService.modifyArticle(guestBookDto);
-				return "guestbook/writesuccess";
-			} catch (Exception e) {
-				e.printStackTrace();
-				model.addAttribute("msg", "글수정 중 문제가 발생했습니다.");
-				return "error/error";
-			}
+
+		List<GuestBookDto> list = guestBookService.listArticle(map);
+		PageNavigation pageNavigation = guestBookService.makePageNavigation(map);
+		if(list != null && !list.isEmpty()) {
+			return new ResponseEntity<List<GuestBookDto>>(list, HttpStatus.OK);
 		} else {
-			model.addAttribute("msg", "로그인 후 사용 가능한 페이지입니다.");
-			return "error/error";
+			return new ResponseEntity(HttpStatus.NO_CONTENT);
 		}
 	}
 	
-	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	public String delete(@RequestParam("articleno") int articleno, Model model) {
-		try {
-			guestBookService.deleteArticle(articleno);
-			return "redirect:list?pg=1&key=&word=";
-		} catch (Exception e) {
-			e.printStackTrace();
-			model.addAttribute("msg", "글삭제 처리 중 문제가 발생했습니다.");
-			return "error/error";
-		}
+	@PutMapping(value = "/modify")
+	public ResponseEntity<List<GuestBookDto>> modifyArticle (@RequestBody GuestBookDto guestBookDto) throws Exception {
+		guestBookService.modifyArticle(guestBookDto);
+		Map<String, String> map = new HashMap<>();
+		map.put("key", "");
+		map.put("word", "");
+		map.put("spp", "10");//sizePerPage
+		List<GuestBookDto> list = guestBookService.listArticle(map);
+		return new ResponseEntity<List<GuestBookDto>>(list, HttpStatus.OK);
+	}
+	
+	@DeleteMapping(value = "/delete/{articleno}")
+	public ResponseEntity<List<GuestBookDto>> delete(@PathVariable("articleno") int articleno) throws Exception {
+		guestBookService.deleteArticle(articleno);
+		Map<String, String> map = new HashMap<>();
+		map.put("key", "");
+		map.put("word", "");
+		map.put("spp", "10");//sizePerPage
+		List<GuestBookDto> list = guestBookService.listArticle(map);
+		return new ResponseEntity<List<GuestBookDto>>(list, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/download", method=RequestMethod.GET)
