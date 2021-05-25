@@ -4,9 +4,11 @@
 
 <mapper namespace="com.ssafy.happyhouse.model.mapper.PickedHouseMapper">
 	<select id="pickedHouseList" parameterType="String" resultType="pickedHouseDto">
-		select dong, code, apt_name, deal_amount
-		from picked_house
-		where user_id = #{userid}
+		SELECT newdeal.pickid, houseinfo.lat, houseinfo.lng, newdeal.dong, newdeal.code, newdeal.AptName, newdeal.no as housedeal_no, newdeal.dealAmount,newdeal.dealYear,newdeal.dealMonth, newdeal.dealDay, newdeal.area, newdeal.floor
+		from houseinfo join (select picked_house.id as pickid, housedeal.dong, housedeal.code, housedeal.AptName, housedeal.dealAmount, housedeal.floor, housedeal.houseinfoid, housedeal.no, housedeal.dealDay, housedeal.dealMonth, housedeal.dealYear, housedeal.area
+					 from picked_house join housedeal
+					 on picked_house.user_id = #{userid} and picked_house.housedeal_id = housedeal.no) as newdeal
+		on houseinfo.no = newdeal.houseinfoid;
 	</select>
 	
 	<select id="pickedHouseDetail" parameterType="int" resultType="pickedHouseDto">
@@ -15,13 +17,19 @@
 		where id = #{pickedId}
 	</select>
 	
+	<select id="userPicks" parameterType="String" resultType="int">
+		select housedeal_id
+		from picked_house, housedeal 
+		where picked_house.user_id = #{userid} and picked_house.housedeal_id = housedeal.no
+	</select>
+	
 	<insert id="pick" parameterType="map">
-		insert into picked_house (id, housedeal_id, user_id)
-		values (1, #{housedeal_id}, #{user_id})
+		insert into picked_house (housedeal_id, user_id)
+		values (#{housedeal_id}, #{user_id})
 	</insert>
 	
-	<delete id="unpick" parameterType="int">
+	<delete id="unpick" parameterType="map">
 		delete from picked_house
-		where id = #{pickedId}
+		where housedeal_id = #{housedeal_id} and user_id = #{user_id}
 	</delete>
 </mapper>

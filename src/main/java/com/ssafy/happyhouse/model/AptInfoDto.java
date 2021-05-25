@@ -12,7 +12,6 @@ public class AptInfoDto {
 	private String dealYear;
 	private String floor;
 	
-	
 	private String area;
 	private String dong;
 	private String lat;
@@ -135,7 +134,6 @@ public class AptInfoDto {
 	public String toString() {
 		return "AptInfoDto [rnum=" + rnum + ", housedeal_no=" + housedeal_no + ", AptName=" + AptName + ", dealAmount="
 				+ dealAmount + ", code=" + code + ", dealDay=" + dealDay + ", dealMonth=" + dealMonth + ", dealYear="
-				+ dealYear + ", floor=" + floor + ", area=" + area + ", dong=" + dong + ", lat=" + lat + ", lng=" + lng
-				+ "]";
+				+ dealYear + ", floor=" + floor + ", area=" + area + ", dong=" + dong + ", lat=" + lat + ", lng=" + lng + "]";
 	}
 }

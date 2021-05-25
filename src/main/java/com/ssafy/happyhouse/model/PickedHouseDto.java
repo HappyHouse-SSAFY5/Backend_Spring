@@ -1,47 +1,41 @@
 package com.ssafy.happyhouse.model;
 
 public class PickedHouseDto {
-	private int id;
-	private String user_id;
+	private int pickid;
 	private double lat;
 	private double lng;
 	private String dong;
 	private String code;
-	private String apt_name;
-	private String deal_amount;
-	private String deal_year;
-	private String deal_month;
-	private String deal_day;
+	private String AptName;
+	private int housedeal_no;
+	private String dealAmount;
+	private String dealYear;
+	private String dealMonth;
+	private String dealDay;
 	private String area;
 	private String floor;
-	public PickedHouseDto(int id, String user_id, double lat, double lng, String dong, String code, String apt_name,
-			String deal_amount, String deal_year, String deal_month, String deal_day, String area, String floor) {
+	public PickedHouseDto(int pickid, double lat, double lng, String dong, String code, String aptName, int housedeal_no,
+			String dealAmount, String dealYear, String dealMonth, String dealDay, String area, String floor) {
 		super();
-		this.id = id;
-		this.user_id = user_id;
+		this.pickid = pickid;
 		this.lat = lat;
 		this.lng = lng;
 		this.dong = dong;
 		this.code = code;
-		this.apt_name = apt_name;
-		this.deal_amount = deal_amount;
-		this.deal_year = deal_year;
-		this.deal_month = deal_month;
-		this.deal_day = deal_day;
+		AptName = aptName;
+		this.dealAmount = dealAmount;
+		this.dealYear = dealYear;
+		this.dealMonth = dealMonth;
+		this.dealDay = dealDay;
 		this.area = area;
 		this.floor = floor;
+		this.housedeal_no = housedeal_no;
 	}
-	public int getId() {
-		return id;
+	public int getPickid() {
+		return pickid;
 	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	public String getUser_id() {
-		return user_id;
-	}
-	public void setUser_id(String user_id) {
-		this.user_id = user_id;
+	public void setPickid(int pickid) {
+		this.pickid = pickid;
 	}
 	public double getLat() {
 		return lat;
@@ -67,35 +61,35 @@ public class PickedHouseDto {
 	public void setCode(String code) {
 		this.code = code;
 	}
-	public String getApt_name() {
-		return apt_name;
+	public String getAptName() {
+		return AptName;
 	}
-	public void setApt_name(String apt_name) {
-		this.apt_name = apt_name;
+	public void setAptName(String aptName) {
+		AptName = aptName;
 	}
-	public String getDeal_amount() {
-		return deal_amount;
+	public String getDealAmount() {
+		return dealAmount;
 	}
-	public void setDeal_amount(String deal_amount) {
-		this.deal_amount = deal_amount;
+	public void setDealAmount(String dealAmount) {
+		this.dealAmount = dealAmount;
 	}
-	public String getDeal_year() {
-		return deal_year;
+	public String getDealYear() {
+		return dealYear;
 	}
-	public void setDeal_year(String deal_year) {
-		this.deal_year = deal_year;
+	public void setDealYear(String dealYear) {
+		this.dealYear = dealYear;
 	}
-	public String getDeal_month() {
-		return deal_month;
+	public String getDealMonth() {
+		return dealMonth;
 	}
-	public void setDeal_month(String deal_month) {
-		this.deal_month = deal_month;
+	public void setDealMonth(String dealMonth) {
+		this.dealMonth = dealMonth;
 	}
-	public String getDeal_day() {
-		return deal_day;
+	public String getDealDay() {
+		return dealDay;
 	}
-	public void setDeal_day(String deal_day) {
-		this.deal_day = deal_day;
+	public void setDealDay(String dealDay) {
+		this.dealDay = dealDay;
 	}
 	public String getArea() {
 		return area;
@@ -111,9 +105,8 @@ public class PickedHouseDto {
 	}
 	@Override
 	public String toString() {
-		return "PickedHouseDto [id=" + id + ", user_id=" + user_id + ", lat=" + lat + ", lng=" + lng + ", dong=" + dong
-				+ ", code=" + code + ", apt_name=" + apt_name + ", deal_amount=" + deal_amount + ", deal_year="
-				+ deal_year + ", deal_month=" + deal_month + ", deal_day=" + deal_day + ", area=" + area + ", floor="
-				+ floor + "]";
+		return "PickedHouseDto [pickid=" + pickid + ", lat=" + lat + ", lng=" + lng + ", dong=" + dong + ", code="
+				+ code + ", AptName=" + AptName + ", dealAmount=" + dealAmount + ", dealYear=" + dealYear
+				+ ", dealMonth=" + dealMonth + ", dealDay=" + dealDay + ", area=" + area + ", floor=" + floor + "housedeal_no="+housedeal_no+"]";
 	}
 }

@@ -17,5 +17,8 @@ public interface PickedHouseService {
 	public int pick(Map<String, String> map) throws SQLException;
 	
 	// 찜 없애기
-	public int unpick(int pickedId) throws SQLException;
+	public int unpick(Map<String, String> map) throws SQLException;
+	
+	// 찜한 목록 출력을 위한 좋아요 기록
+	public int[] userPicks(String userid) throws SQLException;
 }
