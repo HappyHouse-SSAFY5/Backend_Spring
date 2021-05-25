@@ -33,6 +33,8 @@ public class AptController {
 	public ResponseEntity<List<AptInfoDto>> list(@RequestBody Map<String, String> map) throws Exception {
 		List<AptInfoDto> list = searchService.listDong(map);
 		if(list.size() != 0) {
+			System.out.println("On apt dong");
+			System.out.println(list);
 			return new ResponseEntity<List<AptInfoDto>>(list, HttpStatus.OK);
 		}else {
 			return new ResponseEntity(HttpStatus.NO_CONTENT);

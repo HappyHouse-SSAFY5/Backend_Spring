@@ -33,7 +33,12 @@ public class PickedHouseServiceImpl implements PickedHouseService{
 	}
 
 	@Override
-	public int unpick(int pickedid) throws SQLException {
-		return sqlSession.getMapper(PickedHouseMapper.class).unpick(pickedid);
+	public int unpick(Map<String, String> map) throws SQLException {
+		return sqlSession.getMapper(PickedHouseMapper.class).unpick(map);
+	}
+
+	@Override
+	public int[] userPicks(String userid) throws SQLException {
+		return sqlSession.getMapper(PickedHouseMapper.class).userPicks(userid);
 	}
 }

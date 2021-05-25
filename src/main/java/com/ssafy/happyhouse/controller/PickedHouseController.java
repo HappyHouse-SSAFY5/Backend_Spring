@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.happyhouse.model.PickedHouseDto;
 import com.ssafy.happyhouse.model.service.PickedHouseService;
+import com.ssafy.happyhouse.model.service.SearchService;
 
 @RestController
 @CrossOrigin("*")
@@ -29,6 +30,8 @@ public class PickedHouseController {
 	
 	@GetMapping(value = "/pick/list/{userid}")
 	public ResponseEntity<List<PickedHouseDto>> pickedHouseList(@PathVariable("userid") String userid) throws SQLException {
+		System.out.println("userid");
+		System.out.println(userid);
 		List<PickedHouseDto> list = pickedHouseService.pickedHouseList(userid);
 		if(list != null && !list.isEmpty()) {
 			return new ResponseEntity<List<PickedHouseDto>>(list, HttpStatus.OK);
@@ -46,6 +49,18 @@ public class PickedHouseController {
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
 	}
 	
+	@GetMapping(value = "/pick/housedeal/{userid}")
+	public ResponseEntity<int[]> userPicks(@PathVariable("userid") String userid) throws SQLException {
+		int[] pickedId = pickedHouseService.userPicks(userid);
+		if(pickedId != null && pickedId.length != 0) {
+			System.out.println("on housedeal");
+			System.out.println(pickedId);
+			return new ResponseEntity<int[]>(pickedId, HttpStatus.OK);
+		}
+		else
+			return new ResponseEntity(HttpStatus.NO_CONTENT);
+	}
+	
 	@GetMapping(value = "/pick")
 	public ResponseEntity<PickedHouseDto> userInfo(@PathVariable("pickedid") String pickedid) throws SQLException {
 		PickedHouseDto pickedHouseDto = pickedHouseService.pickedHouseDetail(Integer.parseInt(pickedid));
@@ -55,10 +70,10 @@ public class PickedHouseController {
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
 	}
 	
-	@DeleteMapping(value = "/unpick/{userid}/{pickedid}")
-	public ResponseEntity<List<PickedHouseDto>> unpick(@PathVariable("userid") String userid, @PathVariable("pickedid") String pickedid) throws SQLException{
-		pickedHouseService.unpick(Integer.parseInt(pickedid));
-		List<PickedHouseDto> list = pickedHouseService.pickedHouseList(userid);
-		return new ResponseEntity<List<PickedHouseDto>>(list, HttpStatus.OK);
+	@DeleteMapping(value = "/unpick")
+	public ResponseEntity<List<PickedHouseDto>> unpick(@RequestBody Map<String, String> map) throws SQLException{
+		System.out.println(map);
+		pickedHouseService.unpick(map);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }
