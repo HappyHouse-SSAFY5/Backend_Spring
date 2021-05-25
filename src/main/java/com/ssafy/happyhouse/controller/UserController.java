@@ -56,16 +56,9 @@ public class UserController {
 		}
 	}
 	
-	@RequestMapping(value = "/join", method = RequestMethod.GET)
-	public String join() {
-		return "user/join";	
-	}
-	
 	@PostMapping(value="/join")
 	public ResponseEntity<MemberDto> join(@RequestBody MemberDto memberDto) throws Exception{
 		int num = userService.userRegister(memberDto);
-		System.out.println("여기여기여기");
-		System.out.println(num);
 		if(num >= 1) {
 			return new ResponseEntity<MemberDto>(memberDto, HttpStatus.OK);
 		} else {
@@ -89,40 +82,35 @@ public class UserController {
 		}
 	}
 	
-	@RequestMapping(value = "/mypage", method = RequestMethod.GET)
-	public String mypage(Model model, HttpSession session) { // 마이페이지
-		try {
-			MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
-			System.out.println(memberDto);
-			model.addAttribute("userinfo", memberDto);
-			return "user/mypage";
-		} catch (Exception e) {
-			e.printStackTrace();
-			model.addAttribute("msg", "마이페이지 로딩 중 문제가 발생했습니다.");
-			return "error/error";
+	@GetMapping(value ="/mypage/{userid}")
+	public ResponseEntity<MemberDto> mypage(@PathVariable("userid") String userid){
+		MemberDto memberDto = userService.userInfo(userid);
+		if(memberDto != null) {
+			return new ResponseEntity<MemberDto>(memberDto, HttpStatus.OK);
+		} else {
+			return new ResponseEntity(HttpStatus.NOT_FOUND);
 		}
 	}
 	
-	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public String update(MemberDto memberDto, Model model) {
-		try {
-			System.out.println(memberDto);
-			userService.userModify(memberDto);
-			return "home";
-		} catch (Exception e) {
-			e.printStackTrace();
-			model.addAttribute("msg", "회원 정보 수정 중 문제가 발생했습니다.");
-			return "error/error";
+	@PutMapping(value = "/update")
+	public ResponseEntity<MemberDto> update(@RequestBody MemberDto memberDto) {
+		int num = userService.userModify(memberDto);
+		if(num != 0) {
+			return new ResponseEntity<MemberDto>(memberDto, HttpStatus.OK);
+		} else {
+			return new ResponseEntity(HttpStatus.NOT_FOUND);
 		}
 	}
 	
-	@RequestMapping(value = "/delete", method = RequestMethod.POST)
-	public String delete(HttpSession session) { // 회원탈퇴
-		MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
-		String id = memberDto.getUserid();
-		userService.userDelete(id);
-		session.invalidate();
-		return "home";
+	@DeleteMapping(value = "/delete/{userid}")
+	public ResponseEntity<MemberDto> delete(@PathVariable("userid") String userid) {
+		MemberDto memberDto = userService.userInfo(userid);
+		int num = userService.userDelete(userid);
+		if(num != 0) {
+			return new ResponseEntity<MemberDto>(memberDto, HttpStatus.OK);
+		} else {
+			return new ResponseEntity(HttpStatus.NOT_FOUND);
+		}
 	}
 	
 	@RequestMapping(value = "/findpassword", method = RequestMethod.GET)

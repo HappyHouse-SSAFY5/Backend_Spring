@@ -113,7 +113,7 @@
 	      <tr>
 	        <td colspan="2">${article.content}</td>
 	      </tr>
-	      <c:if test="${!empty article.fileInfos}">
+<%--	      <c:if test="${!empty article.fileInfos}">
 	      <tr>
 	        <td colspan="2">
 			<ul>
@@ -123,7 +123,7 @@
 			</ul>
 			</td>
 	      </tr>
-	      </c:if>
+	      </c:if>  --%>
 	      <c:if test="${userinfo.userid == article.userid}">
 	      <tr>
 	        <td colspan="2">
