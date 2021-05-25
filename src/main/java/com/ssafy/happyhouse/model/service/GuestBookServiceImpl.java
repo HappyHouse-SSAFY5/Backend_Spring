@@ -23,13 +23,14 @@ public class GuestBookServiceImpl implements GuestBookService {
 
 	@Override
 	@Transactional
-	public void writeArticle(GuestBookDto guestBookDto) throws Exception {
+	public int writeArticle(GuestBookDto guestBookDto) throws Exception {
 		if(guestBookDto.getSubject() == null || guestBookDto.getContent() == null) {
 			throw new Exception();
 		}
 		GuestBookMapper guestBookMapper = sqlSession.getMapper(GuestBookMapper.class);
 		guestBookMapper.writeArticle(guestBookDto);
 		logger.debug("글번호 : {}", guestBookDto.getArticleno());
+		return 1;
 	}
 
 	@Override

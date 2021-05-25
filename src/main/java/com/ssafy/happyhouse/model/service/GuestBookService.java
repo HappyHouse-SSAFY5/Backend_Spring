@@ -8,7 +8,7 @@ import com.ssafy.util.PageNavigation;
 
 public interface GuestBookService {
 
-	public void writeArticle(GuestBookDto guestBookDto) throws Exception;
+	public int writeArticle(GuestBookDto guestBookDto) throws Exception;
 	public List<GuestBookDto> listArticle(Map<String, String> map) throws Exception;
 	public PageNavigation makePageNavigation(Map<String, String> map) throws Exception;
 	

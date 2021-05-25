@@ -12,13 +12,13 @@
     	</selectKey>
 	</insert>
 	
-	<insert id="fileRegist" parameterType="GuestBookDto">
+	<!-- <insert id="fileRegist" parameterType="GuestBookDto">
 		insert into file_info (articleno, savefolder, originfile, savefile)
 		values
 		<foreach collection="fileInfos" item="fileinfo" separator=" , ">
 		(#{articleno}, #{fileinfo.saveFolder}, #{fileinfo.originFile}, #{fileinfo.saveFile})
 		</foreach>
-	</insert>
+	</insert>  -->
 	
 	<resultMap type="GuestBookDto" id="guestBookList">
 		<result property="articleno" column="articleno"/>
@@ -26,7 +26,7 @@
 		<result property="subject" column="subject"/>
 		<result property="content" column="content"/>
 		<result property="regtime" column="regtime"/>
-		<collection property="fileInfos" column="articleno" javaType="list" ofType="FileInfoDto" select="fileInfoList"/>
+		<!-- <collection property="fileInfos" column="articleno" javaType="list" ofType="FileInfoDto" select="fileInfoList"/> -->
 	</resultMap>
 	
 	<select id="listArticle" parameterType="map" resultMap="guestBookList">
