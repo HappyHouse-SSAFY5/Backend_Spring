@@ -3,6 +3,7 @@ package com.ssafy.happyhouse.model;
 public class AptInfoDto {
 	public static String dealType = "아파트 매매";
 	private int rnum;
+	private int housedeal_no;
 	private String AptName;
 	private String dealAmount;
 	private String code;
@@ -17,10 +18,11 @@ public class AptInfoDto {
 	private String lat;
 	private String lng;
 	public AptInfoDto(){}
-	public AptInfoDto(int rnum, String aptName, String dealAmount,String code, String area, String sido, String gugun, String dong,
+	public AptInfoDto(int rnum, int housedeal_no, String aptName, String dealAmount,String code, String area, String sido, String gugun, String dong,
 			String lat, String lng, String floor) {
 		super();
 		this.rnum = rnum;
+		this.housedeal_no = housedeal_no;
 		this.AptName = aptName;
 		this.dealAmount = dealAmount;
 		this.area = area;
@@ -31,6 +33,12 @@ public class AptInfoDto {
 		this.code = code;
 	}
 
+	public int getHousedeal_no() {
+		return housedeal_no;
+	}
+	public void setHousedeal_no(int housedeal_no) {
+		this.housedeal_no = housedeal_no;
+	}
 	public int getRnum() {
 		return rnum;
 	}
@@ -125,10 +133,9 @@ public class AptInfoDto {
 	}
 	@Override
 	public String toString() {
-		return "AptInfoDto [rnum=" + rnum + ", AptName=" + AptName + ", dealAmount=" + dealAmount + ", code=" + code
-				+ ", dealDay=" + dealDay + ", dealMonth=" + dealMonth + ", dealYear=" + dealYear + ", floor=" + floor
-				+ ", area=" + area + ", dong=" + dong + ", lat=" + lat + ", lng=" + lng + "]";
+		return "AptInfoDto [rnum=" + rnum + ", housedeal_no=" + housedeal_no + ", AptName=" + AptName + ", dealAmount="
+				+ dealAmount + ", code=" + code + ", dealDay=" + dealDay + ", dealMonth=" + dealMonth + ", dealYear="
+				+ dealYear + ", floor=" + floor + ", area=" + area + ", dong=" + dong + ", lat=" + lat + ", lng=" + lng
+				+ "]";
 	}
-	
-
 }

@@ -17,7 +17,7 @@
 		</if>
 	</select> -->
 	<select id="listDong" parameterType="map" resultType="aptInfoDto">
-		SELECT @rownum:=@rownum+1 as rnum, housedeal.floor, houseinfo.dong, houseinfo.AptName,housedeal.code, housedeal.dealAmount, housedeal.dealDay, housedeal.dealMonth, housedeal.dealYear, housedeal.area, houseinfo.lat, houseinfo.lng
+		SELECT @rownum:=@rownum+1 as rnum, housedeal.floor, houseinfo.dong, houseinfo.AptName,housedeal.no housedeal_no, housedeal.code, housedeal.dealAmount, housedeal.dealDay, housedeal.dealMonth, housedeal.dealYear, housedeal.area, houseinfo.lat, houseinfo.lng
 		FROM houseinfo, housedeal,(SELECT @ROWNUM := 0) R
 		WHERE houseinfo.no = housedeal.houseinfoid
 		<if test="word != null and word != ''">
