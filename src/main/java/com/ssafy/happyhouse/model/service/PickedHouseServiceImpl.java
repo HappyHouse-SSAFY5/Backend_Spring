@@ -21,11 +21,6 @@ public class PickedHouseServiceImpl implements PickedHouseService{
 	public List<PickedHouseDto> pickedHouseList(String userid) throws SQLException {
 		return sqlSession.getMapper(PickedHouseMapper.class).pickedHouseList(userid);
 	}
-	
-	@Override
-	public PickedHouseDto pickedHouseDetail(int pickedid) throws SQLException {
-		return sqlSession.getMapper(PickedHouseMapper.class).pickedHouseDetail(pickedid);
-	}
 
 	@Override
 	public int pick(Map<String, String> map) throws SQLException {

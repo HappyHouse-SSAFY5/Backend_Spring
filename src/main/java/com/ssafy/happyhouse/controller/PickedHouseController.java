@@ -41,7 +41,7 @@ public class PickedHouseController {
 	}
 	
 	@PostMapping(value = "/pick")
-	public ResponseEntity<Integer> userRegister(@RequestBody Map<String, String> map) throws SQLException {
+	public ResponseEntity<Integer> pick(@RequestBody Map<String, String> map) throws SQLException {
 		int cnt = pickedHouseService.pick(map);
 		if(cnt != 0) {
 			return new ResponseEntity<Integer>(HttpStatus.OK);
@@ -57,15 +57,6 @@ public class PickedHouseController {
 			System.out.println(pickedId);
 			return new ResponseEntity<int[]>(pickedId, HttpStatus.OK);
 		}
-		else
-			return new ResponseEntity(HttpStatus.NO_CONTENT);
-	}
-	
-	@GetMapping(value = "/pick")
-	public ResponseEntity<PickedHouseDto> userInfo(@PathVariable("pickedid") String pickedid) throws SQLException {
-		PickedHouseDto pickedHouseDto = pickedHouseService.pickedHouseDetail(Integer.parseInt(pickedid));
-		if(pickedHouseDto != null)
-			return new ResponseEntity<PickedHouseDto>(pickedHouseDto, HttpStatus.OK);
 		else
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
 	}
