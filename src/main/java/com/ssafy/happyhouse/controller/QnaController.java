@@ -37,13 +37,7 @@ public class QnaController {
 	private QnaService qnaService;
 	
 	@PostMapping(value = "/registration")
-	public ResponseEntity<List<QnaDto>> qnaRegister(@RequestBody QnaDto qnaDto) throws Exception {
-//		, HttpSession session
-//		MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
-//		System.out.println(memberDto);
-//		System.out.println("sdfsf hi");
-		
-		qnaDto.setUserid("admin");
+	public ResponseEntity<List<QnaDto>> qnaRegister(@RequestBody QnaDto qnaDto) throws Exception {		
 		System.out.println(qnaDto);
 		int cnt = qnaService.writeQna(qnaDto);
 		Map<String, String> map = new HashMap<>();
