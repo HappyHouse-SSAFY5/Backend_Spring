@@ -8,4 +8,4 @@ The technology stack is as follows:
 
 - Spring as the application framework
 - Mybatis as the JAVA persistence framework
-- Apache and Tomcat as the WAS(Web Application Server), HTTP request-response handler
+- Apache Tomcat as the WAS(Web Application Server), HTTP request-response handler
